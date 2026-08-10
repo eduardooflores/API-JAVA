@@ -23,6 +23,7 @@ public class SecurityConfig {
 
     public SecurityConfig(
             JwtAuthenticationFilter jwtAuthenticationFilter,
+            AutenticacaoService autenticacaoService,
             CustomAuthenticationEntryPoint customAuthenticationEntryPoint,
             CustomAccessDeniedHandler customAccessDeniedHandler
     ) {
@@ -43,26 +44,19 @@ public class SecurityConfig {
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/produtos/**",
-                                "/unidades/**"
+                                "/unidades/**",
+                                "/produto-unidade/**"
                         ).permitAll()
 
                         .requestMatchers(
                                 HttpMethod.POST,
-                                "/produtos/**"
-                        ).hasRole("GERENTE")
-
-                        .requestMatchers(
-                                HttpMethod.POST,
-                                "/unidades/**"
-                        ).hasRole("GERENTE")
-
-                        .requestMatchers(
-                                HttpMethod.POST,
-                                "/estoque/**"
+                                "/produtos/**",
+                                "/unidades/**",
+                                "/estoque/**",
+                                "/produto-unidade/**"
                         ).hasRole("GERENTE")
 
                         .requestMatchers("/pedidos/**").authenticated()
-
                         .requestMatchers("/pagamentos/**").authenticated()
 
                         .anyRequest().authenticated()
