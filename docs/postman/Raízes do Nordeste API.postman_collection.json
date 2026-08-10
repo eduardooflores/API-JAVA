@@ -1,0 +1,966 @@
+{
+	"info": {
+		"_postman_id": "fddcfafb-bd83-43e6-9664-1e786ce6870e",
+		"name": "Raízes do Nordeste API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49587434",
+		"_collection_link": "https://eduardoofloress-5197461.postman.co/workspace/Eduardo-Flores's-Workspace~25baf89b-9404-445d-8883-acccadd012c1/collection/49587434-fddcfafb-bd83-43e6-9664-1e786ce6870e?action=share&source=collection_link&creator=49587434"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "POST Cadastro - Sucesso",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Cliente Teste\",\n  \"email\": \"cliente3@teste.com\",\n  \"senha\": \"senha123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/cadastro",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"cadastro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Login Cliente - Sucesso",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"cliente3@teste.com\",\n  \"senha\": \"senha123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Login Gerente - Sucesso",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"gerente@teste.com\",\n  \"senha\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Unidades",
+			"item": [
+				{
+					"name": "POST Criar Unidade - Sucesso",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnZXJlbnRlQHRlc3RlLmNvbSIsImlhdCI6MTc4NjQwMDUzMiwiZXhwIjoxNzg2NDA0MTMyfQ.WPMj5KI5GVCDf_ukJ2VItgr8YwWGQ7i4-kO5Vb-zumw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Unidade Centro\",\n  \"endereco\": \"Rua Teste, 123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/unidades",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"unidades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Criar Unidade - Sem Permissao",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGllbnRlM0B0ZXN0ZS5jb20iLCJpYXQiOjE3ODY0MDA0MjYsImV4cCI6MTc4NjQwNDAyNn0.7G8Tf7-QJVZaeCHFu7IbYUdz7m1dgREG7fFfqu7IVCY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Unidade Centro\",\n  \"endereco\": \"Rua Teste, 123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/unidades",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"unidades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Criar Unidade - Sem Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Unidade Centro\",\n  \"endereco\": \"Rua Teste, 123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/unidades",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"unidades"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produtos",
+			"item": [
+				{
+					"name": "POST Criar Produto - Sucesso",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnZXJlbnRlQHRlc3RlLmNvbSIsImlhdCI6MTc4NjQwMDUzMiwiZXhwIjoxNzg2NDA0MTMyfQ.WPMj5KI5GVCDf_ukJ2VItgr8YwWGQ7i4-kO5Vb-zumw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"X-Burger\",\n  \"categoria\": \"Lanche\",\n  \"precoBase\": 25.90\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/produtos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Listar Produtos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/produtos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Criar Produto - Dados Invalidos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnZXJlbnRlQHRlc3RlLmNvbSIsImlhdCI6MTc4NjQwMDUzMiwiZXhwIjoxNzg2NDA0MTMyfQ.WPMj5KI5GVCDf_ukJ2VItgr8YwWGQ7i4-kO5Vb-zumw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"categoria\": \"Lanche\",\n  \"precoBase\": 25.90\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/produtos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ProdutoUnidade",
+			"item": [
+				{
+					"name": "POST Vincular ProdutoUnidade - Sucesso",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnZXJlbnRlQHRlc3RlLmNvbSIsImlhdCI6MTc4NjQwMDUzMiwiZXhwIjoxNzg2NDA0MTMyfQ.WPMj5KI5GVCDf_ukJ2VItgr8YwWGQ7i4-kO5Vb-zumw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"produtoId\": \"9afc751f-29fa-4893-8179-c68e388dc76e\",\n  \"unidadeId\": \"b8a54f67-292a-4b29-92f0-cb4df3b4388e\",\n  \"preco\": 25.90\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/produto-unidade",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"produto-unidade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Listar Cardapio por Unidade",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/produto-unidade/unidade/b8a54f67-292a-4b29-92f0-cb4df3b4388e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"produto-unidade",
+								"unidade",
+								"b8a54f67-292a-4b29-92f0-cb4df3b4388e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Vincular ProdutoUnidade - Produto Inexistente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnZXJlbnRlQHRlc3RlLmNvbSIsImlhdCI6MTc4NjQwMDUzMiwiZXhwIjoxNzg2NDA0MTMyfQ.WPMj5KI5GVCDf_ukJ2VItgr8YwWGQ7i4-kO5Vb-zumw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"produtoId\": \"00000000-0000-0000-0000-000000000000\",\n  \"unidadeId\": \"b8a54f67-292a-4b29-92f0-cb4df3b4388e\",\n  \"preco\": 25.90\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/produto-unidade",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"produto-unidade"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Estoque",
+			"item": [
+				{
+					"name": "POST Registrar Entrada - Sucesso",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnZXJlbnRlQHRlc3RlLmNvbSIsImlhdCI6MTc4NjQwMDUzMiwiZXhwIjoxNzg2NDA0MTMyfQ.WPMj5KI5GVCDf_ukJ2VItgr8YwWGQ7i4-kO5Vb-zumw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"produtoId\": \"9afc751f-29fa-4893-8179-c68e388dc76e\",\n  \"unidadeId\": \"b8a54f67-292a-4b29-92f0-cb4df3b4388e\",\n  \"quantidade\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/estoque/entrada",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"estoque",
+								"entrada"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Consultar Saldo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnZXJlbnRlQHRlc3RlLmNvbSIsImlhdCI6MTc4NjQwMDUzMiwiZXhwIjoxNzg2NDA0MTMyfQ.WPMj5KI5GVCDf_ukJ2VItgr8YwWGQ7i4-kO5Vb-zumw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/estoque/saldo?produtoId=9afc751f-29fa-4893-8179-c68e388dc76e&unidadeId=b8a54f67-292a-4b29-92f0-cb4df3b4388e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"estoque",
+								"saldo"
+							],
+							"query": [
+								{
+									"key": "produtoId",
+									"value": "9afc751f-29fa-4893-8179-c68e388dc76e"
+								},
+								{
+									"key": "unidadeId",
+									"value": "b8a54f67-292a-4b29-92f0-cb4df3b4388e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnZXJlbnRlQHRlc3RlLmNvbSIsImlhdCI6MTc4NjQwMDUzMiwiZXhwIjoxNzg2NDA0MTMyfQ.WPMj5KI5GVCDf_ukJ2VItgr8YwWGQ7i4-kO5Vb-zumw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"produtoId\": \"9afc751f-29fa-4893-8179-c68e388dc76e\",\n  \"unidadeId\": \"b8a54f67-292a-4b29-92f0-cb4df3b4388e\",\n  \"quantidade\": -5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/estoque/entrada",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"estoque",
+								"entrada"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedidos",
+			"item": [
+				{
+					"name": "POST Criar Pedido - Sucesso",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGllbnRlM0B0ZXN0ZS5jb20iLCJpYXQiOjE3ODY0MDA0MjYsImV4cCI6MTc4NjQwNDAyNn0.7G8Tf7-QJVZaeCHFu7IbYUdz7m1dgREG7fFfqu7IVCY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"canalPedido\": \"TOTEM\",\n  \"unidadeId\": \"b8a54f67-292a-4b29-92f0-cb4df3b4388e\",\n  \"itens\": [\n    { \"produtoId\": \"9afc751f-29fa-4893-8179-c68e388dc76e\", \"quantidade\": 2 }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Listar Pedidos por Canal",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGllbnRlM0B0ZXN0ZS5jb20iLCJpYXQiOjE3ODY0MDA0MjYsImV4cCI6MTc4NjQwNDAyNn0.7G8Tf7-QJVZaeCHFu7IbYUdz7m1dgREG7fFfqu7IVCY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "file",
+							"file": {}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pedidos?canalPedido=TOTEM",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos"
+							],
+							"query": [
+								{
+									"key": "canalPedido",
+									"value": "TOTEM"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH Atualizar Status - Sucesso",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGllbnRlM0B0ZXN0ZS5jb20iLCJpYXQiOjE3ODY0MDA0MjYsImV4cCI6MTc4NjQwNDAyNn0.7G8Tf7-QJVZaeCHFu7IbYUdz7m1dgREG7fFfqu7IVCY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pedidos/6f1cb119-a3d4-4fb5-9125-35536fb062a6/status?novoStatus=EM_PREPARO",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos",
+								"6f1cb119-a3d4-4fb5-9125-35536fb062a6",
+								"status"
+							],
+							"query": [
+								{
+									"key": "novoStatus",
+									"value": "EM_PREPARO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH Atualizar Status - Transicao Invalida",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGllbnRlM0B0ZXN0ZS5jb20iLCJpYXQiOjE3ODY0MDA0MjYsImV4cCI6MTc4NjQwNDAyNn0.7G8Tf7-QJVZaeCHFu7IbYUdz7m1dgREG7fFfqu7IVCY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pedidos/6f1cb119-a3d4-4fb5-9125-35536fb062a6/status?novoStatus=ENTREGUE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos",
+								"6f1cb119-a3d4-4fb5-9125-35536fb062a6",
+								"status"
+							],
+							"query": [
+								{
+									"key": "novoStatus",
+									"value": "ENTREGUE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Criar Pedido - Estoque Insuficiente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGllbnRlM0B0ZXN0ZS5jb20iLCJpYXQiOjE3ODY0MDA0MjYsImV4cCI6MTc4NjQwNDAyNn0.7G8Tf7-QJVZaeCHFu7IbYUdz7m1dgREG7fFfqu7IVCY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"canalPedido\": \"APP\",\n  \"unidadeId\": \"b8a54f67-292a-4b29-92f0-cb4df3b4388e\",\n  \"itens\": [\n    { \"produtoId\": \"9afc751f-29fa-4893-8179-c68e388dc76e\", \"quantidade\": 999 }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Criar Pedido - Dados Invalidos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGllbnRlM0B0ZXN0ZS5jb20iLCJpYXQiOjE3ODY0MDA0MjYsImV4cCI6MTc4NjQwNDAyNn0.7G8Tf7-QJVZaeCHFu7IbYUdz7m1dgREG7fFfqu7IVCY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"unidadeId\": \"b8a54f67-292a-4b29-92f0-cb4df3b4388e\",\n  \"itens\": [\n    { \"produtoId\": \"9afc751f-29fa-4893-8179-c68e388dc76e\", \"quantidade\": 999 }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Criar Pedido - Sem Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"canalPedido\": \"TOTEM\",\n  \"unidadeId\": \"b8a54f67-292a-4b29-92f0-cb4df3b4388e\",\n  \"itens\": [\n    { \"produtoId\": \"9afc751f-29fa-4893-8179-c68e388dc76e\", \"quantidade\": 2 }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pagamento",
+			"item": [
+				{
+					"name": "POST Processar Pagamento - Aprovado",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGllbnRlM0B0ZXN0ZS5jb20iLCJpYXQiOjE3ODY0MDA0MjYsImV4cCI6MTc4NjQwNDAyNn0.7G8Tf7-QJVZaeCHFu7IbYUdz7m1dgREG7fFfqu7IVCY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pagamentos/6f1cb119-a3d4-4fb5-9125-35536fb062a6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pagamentos",
+								"6f1cb119-a3d4-4fb5-9125-35536fb062a6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Processar Pagamento - Recusado",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGllbnRlM0B0ZXN0ZS5jb20iLCJpYXQiOjE3ODY0MDA0MjYsImV4cCI6MTc4NjQwNDAyNn0.7G8Tf7-QJVZaeCHFu7IbYUdz7m1dgREG7fFfqu7IVCY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pagamentos/6f1cb119-a3d4-4fb5-9125-35536fb062a6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pagamentos",
+								"6f1cb119-a3d4-4fb5-9125-35536fb062a6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Processar Pagamento - Pedido Inexistente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGllbnRlM0B0ZXN0ZS5jb20iLCJpYXQiOjE3ODY0MDA0MjYsImV4cCI6MTc4NjQwNDAyNn0.7G8Tf7-QJVZaeCHFu7IbYUdz7m1dgREG7fFfqu7IVCY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pagamentos/00000000-0000-0000-0000-000000000000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pagamentos",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Erros",
+			"item": [
+				{
+					"name": "GET Pedidos - Sem Token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Produto - Sem Permissao (Cliente)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGllbnRlM0B0ZXN0ZS5jb20iLCJpYXQiOjE3ODY0MDA0MjYsImV4cCI6MTc4NjQwNDAyNn0.7G8Tf7-QJVZaeCHFu7IbYUdz7m1dgREG7fFfqu7IVCY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Produto Teste\",\n  \"categoria\": \"Teste\",\n  \"precoBase\": 10.00\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/produtos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
