@@ -6,6 +6,9 @@ import com.raizes.raizesdonordeste.application.dto.ItemPedidoResponse;
 import com.raizes.raizesdonordeste.application.dto.PedidoResponse;
 import com.raizes.raizesdonordeste.application.exception.EstoqueInsuficienteException;
 import com.raizes.raizesdonordeste.application.exception.RecursoNaoEncontradoException;
+import com.raizes.raizesdonordeste.application.exception.TransicaoInvalidaException;
+import com.raizes.raizesdonordeste.domain.enums.CanalPedido;
+import com.raizes.raizesdonordeste.domain.enums.StatusPedido;
 import com.raizes.raizesdonordeste.domain.enums.TipoMovimentacaoEstoque;
 import com.raizes.raizesdonordeste.domain.model.Estoque;
 import com.raizes.raizesdonordeste.domain.model.ItemPedido;
@@ -56,7 +59,6 @@ public class PedidoService {
                 );
 
         List<ItemPedido> itensPedido = new ArrayList<>();
-
         BigDecimal total = BigDecimal.ZERO;
 
         for (ItemPedidoRequest itemRequest : request.itens()) {
@@ -128,31 +130,128 @@ public class PedidoService {
             estoqueRepository.save(movimentacao);
         }
 
-        List<ItemPedidoResponse> itensResponse = new ArrayList<>();
-
-        for (ItemPedido item : itensPedido) {
-            ItemPedidoResponse itemResponse = new ItemPedidoResponse(
-                    item.getProduto().getId(),
-                    item.getQuantidade(),
-                    item.getPrecoUnitario()
-            );
-
-            itensResponse.add(itemResponse);
-
-        }
-
-        return new PedidoResponse(
-                pedido.getId(),
-                pedido.getStatusPedido(),
-                pedido.getCanalPedido(),
-                pedido.getTotal(),
-                itensResponse,
-                pedido.getCreatedAt()
-        );
-
+        return converterParaResponse(pedido);
     }
 
-    private int calcularSaldoEstoque(UUID produtoId, UUID unidadeId) {
+    public PedidoResponse atualizarStatus(
+            UUID pedidoId,
+            StatusPedido novoStatus
+    ) {
+
+        Pedido pedido = pedidoRepository.findById(pedidoId)
+                .orElseThrow(() ->
+                        new RecursoNaoEncontradoException(
+                                "Pedido não encontrado."
+                        )
+                );
+
+        StatusPedido statusAtual = pedido.getStatusPedido();
+
+        switch (statusAtual) {
+
+            case AGUARDANDO_PAGAMENTO:
+
+                if (novoStatus != StatusPedido.EM_PREPARO
+                        && novoStatus != StatusPedido.CANCELADO) {
+
+                    throw new TransicaoInvalidaException(
+                            "Transição inválida: "
+                                    + statusAtual
+                                    + " → "
+                                    + novoStatus
+                    );
+                }
+
+                break;
+
+            case EM_PREPARO:
+
+                if (novoStatus != StatusPedido.PRONTO
+                        && novoStatus != StatusPedido.CANCELADO) {
+
+                    throw new TransicaoInvalidaException(
+                            "Transição inválida: "
+                                    + statusAtual
+                                    + " → "
+                                    + novoStatus
+                    );
+                }
+
+                break;
+
+            case PRONTO:
+
+                if (novoStatus != StatusPedido.ENTREGUE
+                        && novoStatus != StatusPedido.CANCELADO) {
+
+                    throw new TransicaoInvalidaException(
+                            "Transição inválida: "
+                                    + statusAtual
+                                    + " → "
+                                    + novoStatus
+                    );
+                }
+
+                break;
+
+            case ENTREGUE:
+            case CANCELADO:
+
+                throw new TransicaoInvalidaException(
+                        "O pedido "
+                                + statusAtual
+                                + " não permite novas transições."
+                );
+        }
+
+        pedido.setStatusPedido(novoStatus);
+
+        pedidoRepository.save(pedido);
+
+        return converterParaResponse(pedido);
+    }
+
+    public List<PedidoResponse> listar(
+            CanalPedido canalPedido,
+            StatusPedido status
+    ) {
+
+        List<Pedido> pedidos;
+
+        if (canalPedido != null && status != null) {
+
+            pedidos = pedidoRepository
+                    .findByCanalPedidoAndStatusPedido(
+                            canalPedido,
+                            status
+                    );
+
+        } else if (canalPedido != null) {
+
+            pedidos = pedidoRepository.findByCanalPedido(
+                    canalPedido
+            );
+
+        } else if (status != null) {
+
+            pedidos = pedidoRepository.findByStatusPedido(
+                    status
+            );
+
+        } else {
+
+            pedidos = pedidoRepository.findAll();
+        }
+
+        return pedidos.stream()
+                .map(this::converterParaResponse)
+                .toList();
+    }
+
+    private int calcularSaldoEstoque(
+            UUID produtoId,
+            UUID unidadeId
+    ) {
 
         List<Estoque> movimentacoes =
                 estoqueRepository.findByProdutoIdAndUnidadeId(
@@ -188,5 +287,31 @@ public class PedidoService {
                 (UsuarioDetails) authentication.getPrincipal();
 
         return usuarioDetails.getUsuario();
+    }
+
+    private PedidoResponse converterParaResponse(Pedido pedido) {
+
+        List<ItemPedidoResponse> itensResponse = new ArrayList<>();
+
+        for (ItemPedido item : pedido.getItens()) {
+
+            ItemPedidoResponse itemResponse =
+                    new ItemPedidoResponse(
+                            item.getProduto().getId(),
+                            item.getQuantidade(),
+                            item.getPrecoUnitario()
+                    );
+
+            itensResponse.add(itemResponse);
+        }
+
+        return new PedidoResponse(
+                pedido.getId(),
+                pedido.getStatusPedido(),
+                pedido.getCanalPedido(),
+                pedido.getTotal(),
+                itensResponse,
+                pedido.getCreatedAt()
+        );
     }
 }

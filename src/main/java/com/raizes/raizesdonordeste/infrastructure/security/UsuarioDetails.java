@@ -11,8 +11,12 @@ import java.util.List;
 public class UsuarioDetails implements UserDetails {
     private Usuario usuario;
 
-    public UsuarioDetails(Usuario usuario){
+    public UsuarioDetails(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Usuario getUsuario() {
+        return this.usuario;
     }
 
     @Override
@@ -34,21 +38,21 @@ public class UsuarioDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true; // Conta nunca expira neste exemplo
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true; // Conta nunca bloqueada
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true; // Credenciais nunca expiram
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return true; // Usuário ativo
+        return true;
     }
 }
