@@ -2,6 +2,7 @@ package com.raizes.raizesdonordeste.infrastructure.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,15 +16,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final AutenticacaoService autenticacaoService;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     public SecurityConfig(
             JwtAuthenticationFilter jwtAuthenticationFilter,
-            AutenticacaoService autenticacaoService
+            CustomAuthenticationEntryPoint customAuthenticationEntryPoint,
+            CustomAccessDeniedHandler customAccessDeniedHandler
     ) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-        this.autenticacaoService = autenticacaoService;
+        this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
+        this.customAccessDeniedHandler = customAccessDeniedHandler;
     }
 
     @Bean
@@ -33,16 +38,39 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
 
                 .authorizeHttpRequests(auth -> auth
-
                         .requestMatchers("/auth/**").permitAll()
 
-                        .requestMatchers("/cardapio/**").permitAll()
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/produtos/**",
+                                "/unidades/**"
+                        ).permitAll()
 
-                        .requestMatchers("/produtos/**").hasRole("GERENTE")
-                        .requestMatchers("/unidades/**").hasRole("GERENTE")
-                        .requestMatchers("/estoque/**").hasRole("GERENTE")
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/produtos/**"
+                        ).hasRole("GERENTE")
+
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/unidades/**"
+                        ).hasRole("GERENTE")
+
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/estoque/**"
+                        ).hasRole("GERENTE")
+
+                        .requestMatchers("/pedidos/**").authenticated()
+
+                        .requestMatchers("/pagamentos/**").authenticated()
 
                         .anyRequest().authenticated()
+                )
+
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(customAuthenticationEntryPoint)
+                        .accessDeniedHandler(customAccessDeniedHandler)
                 )
 
                 .sessionManagement(session ->
